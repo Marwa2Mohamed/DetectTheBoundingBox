@@ -4,6 +4,7 @@ const fileInput = document.getElementById("imageFile"),
       imgContext = imgCanvas.getContext("2d");
 
 
+/* rendering the choosen image in canvas*/
 
 fileInput.addEventListener('change', e => {
     const reader = new FileReader(),
