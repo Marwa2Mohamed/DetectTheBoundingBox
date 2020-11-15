@@ -1,5 +1,7 @@
-import cgi
+#!C:\Users\Marwa Mohamed\AppData\Local\Programs\Python\Python39\python.exe
+print("Content-Type: text/html\n")
 import re
+from flask import Flask, render_template, request, Response
 
 # the function starts
 def findTheSlope(bottomLeftX, bottomLeftY, topRightX, topRightY):
@@ -33,21 +35,25 @@ def findTheSlope(bottomLeftX, bottomLeftY, topRightX, topRightY):
 # the function ends
 
 # the actual code starts
-# #!/usr/bin/python
-# print ("Content-type:text/html\r\n\r\n")
-# form = cgi.FieldStorage()
-# bottomLeftX = form.getvalue('bottomLeftX')
-# bottomLeftY  = form.getvalue('bottomLeftY')
-# topRightX = form.getvalue('topRightX')
-# topRightY= form.getvalue('topRightY')
-#
-# print(bottomLeftX)
-# print(bottomLeftY)
-# print(topRightX)
-# print(topRightY)
 
-result = findTheSlope(0,1,3,7)
-print(result) #justForTesting
+
+
+app = Flask(__name__)
+@app.route("/", methods=["GET"])
+def main():
+    if request.method == "GET":
+        bottomLeftX = request.args['bottomLeftX']
+        bottomLeftY = request.args['bottomLeftY']
+        topRightX = request.args['topRightX']
+        topRightY = request.args['topRightY']
+        result = findTheSlope(float(bottomLeftX), float(bottomLeftY), float(topRightX), float(topRightY))
+        print("It worked!")
+        return Response("test", status=200,mimetype="text/html")
+
+    else:
+        return render_template("index.html")
+
+if __name__ =="__main__":
+    app.run(debug=True)
 
 #the actual code ends
-
