@@ -26,5 +26,6 @@ fileInput.addEventListener('change', event => {
         reader.readAsDataURL(file);
     } else {
         alert("Only images are accepted");
+        location.reload();
     }
 })
