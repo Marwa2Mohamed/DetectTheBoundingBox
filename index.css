@@ -5,7 +5,7 @@
 }
 
 body{
-    background-color: #242F40;
+    background-color: #3d5a80;
     -webkit-display: flex;
     -ms-display: flex;
     -moz-display: flex;
@@ -29,8 +29,8 @@ h1{
     margin-top: 2%;
 }
 
-p{
-    
+p {
+
     color: #FFF;
     font-family: cursive;
     font-size: 1.5em;
@@ -38,22 +38,43 @@ p{
     word-break: break-word;
     line-height: 2em;
     margin-top: 2%;
+    margin-left: 6%;
 }
 
 p label {
     text-transform: capitalize;
 }
 
-#img {
+.rendring {
+        margin-left: -14%;
+}
+
+.rendring input[type="file"] {
+    margin-top: 1%;
+    margin-left:0;
+    display: block;
+
+
+}
+
+.rendring canvas {
     display: block;
     border: 3px solid #E5E5E5;
     border-radius: 2%;
-    width: 30%;
-    height: 30%;
-}
-#imageFile {
-    margin-top: 1%;
-    display: block;
-    
+    width: 200%;
 }
 
+#coordinatesform input[type ="submit"] {
+
+    box-shadow: 0 0 40px 40px #CCA43B inset, 0 0 0 0 #CCA43B;
+    transition: all 150ms ease-in-out;
+    border: 3px solid #CCA43B;
+    border-radius: 3%;
+    padding:10% 10%;
+    width: 10vw;
+    background-color: #CCA43B;
+    color: #FFF;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1em;
+}
