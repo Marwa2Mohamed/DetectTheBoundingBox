@@ -2,7 +2,7 @@
 A python project that detect the bounding box positions from an image;
 
 # How To Run
-This web application uses a webserver to run:
+This web application uses a local webserver to run:
 1.Download it inside your local web server folder. For Example, if you are using xampp add it to \xampp\htdocs folder.
 2.The folder contains the packages needed, indluding "Flask" framework (in folder venu) or you can reInstall it int your IDE using your own version.
 
