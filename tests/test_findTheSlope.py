@@ -11,12 +11,15 @@ class TestTheStraightLineSlope(unittest.TestCase):
         self.assertEqual(findTheSlope(0,1,3.0,7), 2)
         self.assertEqual(findTheSlope(0, 1, 3, 7.0), 2)
         self.assertEqual(findTheSlope(0.0, 1.0, 3.0, 7.0), 2)
+        self.assertEqual(findTheSlope("0", 1.0, 3.0, 7.0), 2)
+        self.assertEqual(findTheSlope("0", 1, 3, 7), 2)
         self.assertEqual(findTheSlope(0,1,3,7), 2.0)
         self.assertEqual(findTheSlope(0.0,1,3,7), 2.0)
         self.assertEqual(findTheSlope(0,1.0,3,7), 2.0)
         self.assertEqual(findTheSlope(0,1,3.0,7), 2.0)
         self.assertEqual(findTheSlope(0, 1, 3, 7.0), 2.0)
         self.assertEqual(findTheSlope(0.0, 1.0, 3.0, 7.0), 2.0)
+        self.assertEqual(findTheSlope("0.0", 1.0, 3.0, 7.0), 2.0)
 
     def test_InvalidArguments(self):
         # Test that both deltaX and deltaY > 0
