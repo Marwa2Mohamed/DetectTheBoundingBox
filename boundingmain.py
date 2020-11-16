@@ -1,7 +1,6 @@
-#!C:\Users\Marwa Mohamed\AppData\Local\Programs\Python\Python39\python.exe
+#!C:\Users\Marwa Mohamed\anaconda3\pkgs\python-3.7.6-h60c2a47_2\python.exe
 print("Content-Type: text/html\n")
 import re
-from flask import Flask, render_template, request, Response
 
 # the function starts
 def findTheSlope(bottomLeftX, bottomLeftY, topRightX, topRightY):
@@ -37,23 +36,26 @@ def findTheSlope(bottomLeftX, bottomLeftY, topRightX, topRightY):
 # the actual code starts
 
 
-
+print("testing message")
+import flask
+from flask import Flask, render_template, request
 app = Flask(__name__)
 @app.route("/", methods=["GET"])
 def main():
     if request.method == "GET":
-        bottomLeftX = request.args['bottomLeftX']
-        bottomLeftY = request.args['bottomLeftY']
-        topRightX = request.args['topRightX']
-        topRightY = request.args['topRightY']
+        bottomLeftX = request.args.get('bottomLeftX')
+        print(type(bottomLeftX))
+        bottomLeftY = request.args.get('bottomLeftY')
+        topRightX = request.args.get('topRightX')
+        topRightY = request.args.get('topRightY')
         result = findTheSlope(float(bottomLeftX), float(bottomLeftY), float(topRightX), float(topRightY))
-        print("It worked!")
-        return Response("test", status=200,mimetype="text/html")
+        return result
 
     else:
         return render_template("index.html")
 
+
 if __name__ =="__main__":
-    app.run(debug=True)
+    app.run(host='127.0.0.1', port=80, debug=True, threaded=True)
 
 #the actual code ends
