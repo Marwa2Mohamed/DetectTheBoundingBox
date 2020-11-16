@@ -12,4 +12,5 @@ This web application uses a local webserver to run:
 2. If inputs' values are strings but can be parsed to float.
 3. If inputs' values are strings but can't be parsed to float.
 4. TypeError, ZeroDivisionError and ValueError handling.
+
 You can find my testcases in testfolder.
