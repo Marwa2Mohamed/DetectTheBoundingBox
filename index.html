@@ -25,9 +25,25 @@
         <div class="rendring">
             <input type="file" accept="image/*" id="imageFile"/>
             <canvas id="img"></canvas>
+            <div id="output"></div>
          </div>
 
-      
+       <form action="boundingmain.py" method="get" name="coordinatesform" id="coordinatesform">
+
+            <label style="display: none;"> bottomLeftX: </label>
+            <input type="text" name="bottomLeftX" id="bottomLeftX" class="coordinates" style="display: none;"><br/>
+
+            <label style="display: none;"> bottomLeftY: </label>
+            <input type="text" name="bottomLeftY" id="bottomLeftY" class="coordinates" style="display: none;"><br/>
+
+            <label style="display: none;"> topRightX: </label>
+            <input type="text" name="topRightX" id="topRightX" class="coordinates" style="display: none;"><br/>
+
+            <label style="display: none;"> topRightY: </label>
+            <input type="text" name="topRightY" id="topRightY" class="coordinates" style="display: none;"><br/>
+
+            <input type="submit" name="submit" value="Submit">
+        </form>
       
     <script src="index.js" type="text/javascript"> </script>
   </body>
