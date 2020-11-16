@@ -63,7 +63,7 @@ fileInput.addEventListener('change', event => {
                     calculateTheRectangleFourPoints();
                     getTopRight();
                     getBottomLeft();
-                    setInputsValues();
+                    setInputsValues(); // set the hidden inputs in form values to the calculated xs and ys
                 /* end of calculate and get the topright and bottomleft*/
             });
 
@@ -122,13 +122,16 @@ function getTopRight() {
     topRightX = Math.max(X1,X2,X3,X4);
     switch (topRightX) {
         case X1:
-            topRightY = Y1;
-        case X2:
-            topRightY = Y2;
         case X3:
-            topRightY = Y3;
+            topRightY = Math.min(Y1,Y3);
+            break;
+        case X2:
         case X4:
-            topRightY = Y4;
+            topRightY = Math.min(Y2,Y4);
+            break;
+
+
+
     }
 }
 function getBottomLeft() {
@@ -136,14 +139,13 @@ function getBottomLeft() {
     bottomLeftX = Math.min(X1,X2,X3,X4);
     switch (bottomLeftX) {
         case X1:
-            bottomLeftY = Y1;
-        case X2:
-            bottomLeftY = Y2;
         case X3:
-            bottomLeftY = Y3;
+            bottomLeftY = Math.max(Y1,Y3);
+            break;
+        case X2:
         case X4:
-            bottomLeftY = Y4;
-
+            bottomLeftY = Math.max(Y2,Y4);
+            break;
     }
 }
 function setInputsValues() {
