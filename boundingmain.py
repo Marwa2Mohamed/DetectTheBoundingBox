@@ -20,8 +20,8 @@ def findTheSlope(bottomLeftX, bottomLeftY, topRightX, topRightY):
         SbottomLeftY = float(bottomLeftY)
         StopRightX = float(topRightX)
         StopRightY = float(topRightY)
-        X = StopRightX - SbottomLeftX
-        Y = StopRightY - SbottomLeftY
+        X = abs(StopRightX - SbottomLeftX)
+        Y = abs(StopRightY - SbottomLeftY)
 
         # Checking that the user draw a box not a straight line
         if Y == 0:
