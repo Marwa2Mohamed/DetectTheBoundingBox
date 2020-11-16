@@ -44,7 +44,6 @@ app = Flask(__name__)
 def main():
     if request.method == "GET":
         bottomLeftX = request.args.get('bottomLeftX')
-        print(type(bottomLeftX))
         bottomLeftY = request.args.get('bottomLeftY')
         topRightX = request.args.get('topRightX')
         topRightY = request.args.get('topRightY')
