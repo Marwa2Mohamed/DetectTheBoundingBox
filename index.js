@@ -2,7 +2,7 @@
 
 //Intizialize global element objects
 const fileInput = document.getElementById("imageFile"),
-      output = document.getElementById("output"),
+      inputText = document.getElementsByClassName("coordinates"),
       imgCanvas = document.getElementById("img"),
       imgContext = imgCanvas.getContext("2d"),
       image = new Image();
@@ -53,8 +53,6 @@ fileInput.addEventListener('change', event => {
                 imgContext.drawImage(image, 0, 0);
                 last_mousex = parseInt(e.clientX-canvasX);
                 last_mousey = parseInt(e.clientY-canvasY);
-                console.log(last_mousex);
-                console.log(last_mousey);
                 mousedown = true;
             });
 
@@ -62,11 +60,10 @@ fileInput.addEventListener('change', event => {
             imgCanvas.addEventListener('mouseup', function(e) {
                 mousedown = false;
                 /* begining of calculate and get the topright and bottomleft*/
-                    console.log("width: " + width);
-                    console.log("height: " + height);
                     calculateTheRectangleFourPoints();
                     getTopRight();
                     getBottomLeft();
+                    setInputsValues();
                 /* end of calculate and get the topright and bottomleft*/
             });
 
@@ -133,8 +130,6 @@ function getTopRight() {
         case X4:
             topRightY = Y4;
     }
-    console.log("topRightX: " + bottomLeftX);
-    console.log("topRightY: " + topRightY);
 }
 function getBottomLeft() {
     /* bottomLeft ==> the smallest x & largest y*/
@@ -150,6 +145,11 @@ function getBottomLeft() {
             bottomLeftY = Y4;
 
     }
-    console.log("bottomLeftX: " + bottomLeftX);
-    console.log("bottomLeftY: " + bottomLeftY);
+}
+function setInputsValues() {
+        inputText[0].value = bottomLeftX;
+        inputText[1].value = bottomLeftY;
+        inputText[2].value = topRightX;
+        inputText[3].value = topRightY;
+
 }
