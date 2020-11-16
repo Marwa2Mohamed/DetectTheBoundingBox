@@ -1,5 +1,5 @@
 # DetectTheBoundingBox
-A python project that detect the bounding box positions from an image;
+A web project that detects the bounding box positions from an image;
 
 # How To Run
 This web application uses a local webserver to run:
