@@ -4,8 +4,8 @@ A python project that detect the bounding box positions from an image;
 # How To Run
 This web application uses a local webserver to run:
 1.Download it inside your local web server folder. For Example, if you are using xampp add it to \xampp\htdocs folder.
-2.The folder contains the packages needed, indluding "Flask" framework (in folder venu) or you can re-install it in your IDE using your own version.
-
+2.The folder contains the packages needed, indluding "Flask" framework, flask_wtf and wtforms (in folder venu) or you can re-install them in your IDE using your own version.
+3.In boundingmain.py replace the first line at the top of the code which looks like this (#!C:\Users\Marwa Mohamed\anaconda3\pkgs\python-3.7.6-h60c2a47_2\python.exe), with your own python path that you run your envirnoment on. 
 # UniTest
 
 1. If inputs' values are real numbers (float and int)
