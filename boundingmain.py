@@ -1,6 +1,9 @@
 #!C:\Users\Marwa Mohamed\anaconda3\pkgs\python-3.7.6-h60c2a47_2\python.exe
 print("Content-Type: text/html\n")
 import re
+import os
+from flask import Flask, render_template
+from forms import CoordinatesForm
 
 # the function starts
 def findTheSlope(bottomLeftX, bottomLeftY, topRightX, topRightY):
@@ -34,27 +37,17 @@ def findTheSlope(bottomLeftX, bottomLeftY, topRightX, topRightY):
 # the function ends
 
 # the actual code starts
+app = Flask(__name__,template_folder='templates')
 
+SECRET_KEY = os.urandom(32)
+app.config['SECRET_KEY'] = SECRET_KEY
 
-print("testing message")
-import flask
-from flask import Flask, render_template, request
-app = Flask(__name__)
-@app.route("/", methods=["GET"])
+@app.route("/")
 def main():
-    if request.method == "GET":
-        bottomLeftX = request.args.get('bottomLeftX')
-        bottomLeftY = request.args.get('bottomLeftY')
-        topRightX = request.args.get('topRightX')
-        topRightY = request.args.get('topRightY')
-        result = findTheSlope(float(bottomLeftX), float(bottomLeftY), float(topRightX), float(topRightY))
-        return result
-
-    else:
-        return render_template("index.html")
+    form = CoordinatesForm()
+    return render_template('index.html', form = form)
 
 
 if __name__ =="__main__":
-    app.run(host='127.0.0.1', port=80, debug=True, threaded=True)
-
+    app.run(port=8888,debug=True)
 #the actual code ends
