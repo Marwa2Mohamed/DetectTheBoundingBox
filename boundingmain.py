@@ -2,10 +2,14 @@
 print("Content-Type: text/html\n")
 import re
 import os
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from forms import CoordinatesForm
 
-result = 0.9
+result = 0.0
+bottomLeftX = 0.0
+bottomLeftY = 0.0
+topRightX = 0.0
+topRightY =0.0
 # the function starts
 def findTheSlope(bottomLeftX, bottomLeftY, topRightX, topRightY):
 
@@ -48,7 +52,13 @@ app.config['SECRET_KEY'] = SECRET_KEY
 def main():
     form = CoordinatesForm()
     if form.validate_on_submit():
-        print("Success") # call function
+
+        global bottomLeftX, bottomLeftY, topRightX, topRightY, result
+        bottomLeftX = request.values['bottomLeftX']
+        bottomLeftY = request.values['bottomLeftY']
+        topRightX = request.values['topRightX']
+        topRightY = request.values['topRightY']
+        result = findTheSlope(bottomLeftX, bottomLeftY,topRightX, topRightY)
         return redirect(url_for('output'))
     return render_template('index.html', form = form)
 
@@ -57,6 +67,6 @@ def output():
     return str(result)
 
 if __name__ =="__main__":
-    app.run(port=8888,debug=True)
+    app.run(port=8080,debug=True)
 
 #the actual code ends
