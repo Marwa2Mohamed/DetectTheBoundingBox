@@ -76,7 +76,7 @@
             width: 200%;
         }
         .input-field {
-            display: block;
+            display: none;
         }
         #coordinatesform input[type ="submit"] {
 
@@ -91,6 +91,7 @@
             text-align: center;
             text-transform: uppercase;
             font-size: 1em;
+            margin-top: 5%;
         }
   </style>
   <body>
@@ -131,11 +132,11 @@ const fileInput = document.getElementById("imageFile"),
 
 //Initilize global variables
 var height, width
-    canvasX = imgCanvas.offsetLeft,
-    canvasY = imgCanvas.offsetTop,
-    last_mousex = last_mousey = 0,
-    mousex = mousey = 0,
-    X1 = Y1 = X2 = Y2 = X3 = Y3 = X4 = Y4 = 0,
+    canvasX = imgCanvas.getBoundingClientRect().left,
+    canvasY = imgCanvas.getBoundingClientRect().top,
+    last_mousex = last_mousey = 0.0,
+    mousex = mousey = 0.0,
+    X1 = Y1 = X2 = Y2 = X3 = Y3 = X4 = Y4 = 0.0,
     topRightX = topRightY = bottomLeftX = bottomLeftY = 0,
     mousedown = false;
 
@@ -170,10 +171,10 @@ fileInput.addEventListener('change', event => {
 
             imgCanvas.addEventListener('mousedown', function(e) {
 
-                imgContext.clearRect(0, 0, imgCanvas.width, imgCanvas.height);
+                imgContext.clearRect(last_mousex, last_mousey, imgCanvas.width, imgCanvas.height);
                 imgContext.drawImage(image, 0, 0);
-                last_mousex = parseInt(e.clientX-canvasX);
-                last_mousey = parseInt(e.clientY-canvasY);
+                last_mousex = e.pageX-canvasX;
+                last_mousey = e.pageY-canvasY;
                 mousedown = true;
             });
 
@@ -182,10 +183,6 @@ fileInput.addEventListener('change', event => {
                 mousedown = false;
 
                 /* begining of calculate and get the topright and bottomleft*/
-                     // console.log("Started X : " + last_mousex);
-                     // console.log("Started Y : " + last_mousey);
-                     // console.log("width: " + width);
-                     // console.log("height" + height);
                     calculateTheRectangleFourPoints();
                     getTopRight();
                     getBottomLeft();
@@ -195,8 +192,8 @@ fileInput.addEventListener('change', event => {
 
             //Mousemove
             imgCanvas.addEventListener('mousemove', function(e) {
-                    mousex = parseInt(e.clientX - canvasX);
-                    mousey = parseInt(e.clientY- canvasY);
+                    mousex = e.pageX - canvasX;
+                    mousey = e.pageY- canvasY;
 
                 if(mousedown) {
                     // imgContext.clearRect(0,0,imgCanvas.width,imgCanvas.height); //clear canvas
