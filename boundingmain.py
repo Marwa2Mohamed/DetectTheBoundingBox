@@ -1,8 +1,15 @@
-#!C:\Users\Marwa Mohamed\AppData\Local\Programs\Python\Python39\python.exe
+#!C:\Users\Marwa Mohamed\anaconda3\pkgs\python-3.7.6-h60c2a47_2\python.exe
 print("Content-Type: text/html\n")
 import re
-from flask import Flask, render_template, request, Response
+import os
+from flask import Flask, render_template, redirect, url_for, request
+from forms import CoordinatesForm
 
+result = 0.0
+bottomLeftX = 0.0
+bottomLeftY = 0.0
+topRightX = 0.0
+topRightY =0.0
 # the function starts
 def findTheSlope(bottomLeftX, bottomLeftY, topRightX, topRightY):
 
@@ -21,8 +28,8 @@ def findTheSlope(bottomLeftX, bottomLeftY, topRightX, topRightY):
         SbottomLeftY = float(bottomLeftY)
         StopRightX = float(topRightX)
         StopRightY = float(topRightY)
-        X = StopRightX - SbottomLeftX
-        Y = StopRightY - SbottomLeftY
+        X = abs(StopRightX - SbottomLeftX)
+        Y = abs(StopRightY - SbottomLeftY)
 
         # Checking that the user draw a box not a straight line
         if Y == 0:
@@ -36,24 +43,30 @@ def findTheSlope(bottomLeftX, bottomLeftY, topRightX, topRightY):
 
 # the actual code starts
 
+app = Flask(__name__,template_folder='templates')
 
+SECRET_KEY = os.urandom(32)
+app.config['SECRET_KEY'] = SECRET_KEY
 
-app = Flask(__name__)
-@app.route("/", methods=["GET"])
+@app.route("/", methods=['GET','POST'])
 def main():
-    if request.method == "GET":
-        bottomLeftX = request.args['bottomLeftX']
-        bottomLeftY = request.args['bottomLeftY']
-        topRightX = request.args['topRightX']
-        topRightY = request.args['topRightY']
-        result = findTheSlope(float(bottomLeftX), float(bottomLeftY), float(topRightX), float(topRightY))
-        print("It worked!")
-        return Response("test", status=200,mimetype="text/html")
+    form = CoordinatesForm()
+    if form.validate_on_submit():
 
-    else:
-        return render_template("index.html")
+        global bottomLeftX, bottomLeftY, topRightX, topRightY, result
+        bottomLeftX = request.values['bottomLeftX']
+        bottomLeftY = request.values['bottomLeftY']
+        topRightX = request.values['topRightX']
+        topRightY = request.values['topRightY']
+        result = findTheSlope(bottomLeftX, bottomLeftY,topRightX, topRightY)
+        return redirect(url_for('output'))
+    return render_template('index.html', form = form)
+
+@app.route("/output")
+def output():
+    return str(result)
 
 if __name__ =="__main__":
-    app.run(debug=True)
+    app.run(port=8080,debug=True)
 
 #the actual code ends
