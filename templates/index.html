@@ -1,8 +1,130 @@
-/*global document*/
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title> The Bounding Box </title>
+    <meta charset="utf-8"/>
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1.0"/>
+      <!--    <link rel="stylesheet" href="index.css" type="text/css">-->
+    <!--[if lt IE9]>
+             <script src="html5shiv-master/dist/html5shiv.min.js"></script>
+        <![endif]-->
+  </head>
+  <style>
+      *{
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
 
-//Intizialize global element objects
+        body{
+            background-color: #3d5a80;
+            -webkit-display: flex;
+            -ms-display: flex;
+            -moz-display: flex;
+            display: flex;
+            -moz-flex-direction: column;
+            -ms-flex-direction: column;
+            -webkit-flex-direction: column;
+            flex-direction: column;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-align-items: center;
+            align-items: center;
+
+        }
+
+        h1{
+            text-align: center;
+            color: #CCA43B;
+            text-transform: capitalize;
+            font-size: 4em;
+            margin-top: 2%;
+        }
+
+        p {
+
+            color: #FFF;
+            font-family: cursive;
+            font-size: 1.5em;
+            text-align: left;
+            word-break: break-word;
+            line-height: 2em;
+            margin-top: 2%;
+            margin-left: 6%;
+        }
+
+        p label {
+            text-transform: capitalize;
+        }
+
+        .rendring {
+                margin-left: -14%;
+        }
+
+        .rendring input[type="file"] {
+            margin-top: 1%;
+            margin-left:0;
+            display: block;
+
+
+        }
+
+        .rendring canvas {
+            display: block;
+            border: 3px solid #E5E5E5;
+            border-radius: 2%;
+            width: 200%;
+        }
+        .input-field {
+            display: none;
+        }
+        #coordinatesform input[type ="submit"] {
+
+            box-shadow: 0 0 40px 40px #CCA43B inset, 0 0 0 0 #CCA43B;
+            transition: all 150ms ease-in-out;
+            border: 3px solid #CCA43B;
+            border-radius: 3%;
+            padding:10% 10%;
+            width: 10vw;
+            background-color: #CCA43B;
+            color: #FFF;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 1em;
+            margin-top: 5%;
+        }
+  </style>
+  <body>
+
+    <!-- a brief introduction about what the user should do-->
+    <h1> the bounding box detector </h1>
+    <p>All you need to do here is:<br/>
+        1. Browse your pc.<br/>
+        2. Specify your image.<br/>
+        3. Click on the image and drag / draw your box anywhere on the image.<br/>
+        <label>note: skip one &amp; two if you are going to drag &amp; drop the image instead.</label>
+    </p>
+
+
+    <!--Loading the user's image-->
+        <div class="rendring">
+            <input type="file" accept="image/*" id="imageFile"/>
+            <canvas id="img"></canvas>
+         </div>
+         <form method="POST" enctype="multipart/form-data" action="" id="coordinatesform">
+             {{form.hidden_tag()}}
+             {{form.bottomLeftX(class_="input-field")}}
+             {{form.bottomLeftY(class_="input-field")}}
+             {{form.topRightX(class_="input-field")}}
+             {{form.topRightY(class_="input-field")}}
+             {{form.submit(input_="submit")}}
+         </form>
+
+  </body>
+  <script>
+      //Intizialize global element objects
 const fileInput = document.getElementById("imageFile"),
-      inputText = document.getElementsByClassName("coordinates"),
+      inputText = document.getElementsByClassName("input-field"),
       imgCanvas = document.getElementById("img"),
       imgContext = imgCanvas.getContext("2d"),
       image = new Image();
@@ -10,11 +132,11 @@ const fileInput = document.getElementById("imageFile"),
 
 //Initilize global variables
 var height, width
-    canvasX = imgCanvas.offsetLeft,
-    canvasY = imgCanvas.offsetTop,
-    last_mousex = last_mousey = 0,
-    mousex = mousey = 0,
-    X1 = Y1 = X2 = Y2 = X3 = Y3 = X4 = Y4 = 0,
+    canvasX = imgCanvas.getBoundingClientRect().left,
+    canvasY = imgCanvas.getBoundingClientRect().top,
+    last_mousex = last_mousey = 0.0,
+    mousex = mousey = 0.0,
+    X1 = Y1 = X2 = Y2 = X3 = Y3 = X4 = Y4 = 0.0,
     topRightX = topRightY = bottomLeftX = bottomLeftY = 0,
     mousedown = false;
 
@@ -49,16 +171,17 @@ fileInput.addEventListener('change', event => {
 
             imgCanvas.addEventListener('mousedown', function(e) {
 
-                imgContext.clearRect(0, 0, imgCanvas.width, imgCanvas.height);
+                imgContext.clearRect(last_mousex, last_mousey, imgCanvas.width, imgCanvas.height);
                 imgContext.drawImage(image, 0, 0);
-                last_mousex = parseInt(e.clientX-canvasX);
-                last_mousey = parseInt(e.clientY-canvasY);
+                last_mousex = e.pageX-canvasX;
+                last_mousey = e.pageY-canvasY;
                 mousedown = true;
             });
 
             //Mouseup
             imgCanvas.addEventListener('mouseup', function(e) {
                 mousedown = false;
+
                 /* begining of calculate and get the topright and bottomleft*/
                     calculateTheRectangleFourPoints();
                     getTopRight();
@@ -69,8 +192,8 @@ fileInput.addEventListener('change', event => {
 
             //Mousemove
             imgCanvas.addEventListener('mousemove', function(e) {
-                    mousex = parseInt(e.clientX - canvasX);
-                    mousey = parseInt(e.clientY- canvasY);
+                    mousex = e.pageX - canvasX;
+                    mousey = e.pageY- canvasY;
 
                 if(mousedown) {
                     // imgContext.clearRect(0,0,imgCanvas.width,imgCanvas.height); //clear canvas
@@ -155,3 +278,5 @@ function setInputsValues() {
         inputText[3].value = topRightY;
 
 }
+  </script>
+</html>
